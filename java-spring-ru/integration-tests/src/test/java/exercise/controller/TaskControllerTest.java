@@ -25,10 +25,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.datafaker.Faker;
 import exercise.repository.TaskRepository;
 import exercise.model.Task;
+import org.springframework.transaction.annotation.Transactional;
 
 // BEGIN
 @SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 // END
 class ApplicationTest {
 
@@ -104,7 +106,7 @@ class ApplicationTest {
         task.setTitle(faker.lorem().word());
         task.setDescription(faker.lorem().paragraph());
 
-        var request = put("/posts/{id}", testTask.getId())
+        var request = put("/tasks/{id}", testTask.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(om.writeValueAsString(task));
 
@@ -120,7 +122,7 @@ class ApplicationTest {
     @Test
     public void testDelete() throws Exception {
 
-        mockMvc.perform(delete("/posts/{id}", testTask.getId()))
+        mockMvc.perform(delete("/tasks/{id}", testTask.getId()))
                 .andExpect(status().isOk());
 
         assertThat(taskRepository.findAll()).isEmpty();
