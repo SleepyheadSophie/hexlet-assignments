@@ -26,7 +26,7 @@ public abstract class TaskMapper {
     @Mapping(target= "assignee", source = "assigneeId", qualifiedByName = "getUserById")
     public abstract void update(TaskUpdateDTO dto, @MappingTarget Task model);
 
-    //тут реализация метода
+    //пункт 5.10 по документации MapStruct
     @Named("getUserById")
     public User getUserById(Long id) {
         if (id == null) {
